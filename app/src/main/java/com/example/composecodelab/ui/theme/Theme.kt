@@ -14,8 +14,12 @@ private val DarkColorPalette = darkColors(
 
 private val LightColorPalette = lightColors(
     primary = Red900,
+    onPrimary = Pink50,
     primaryVariant = Red900Dark,
     secondary = DeepPurple900,
+    onSecondary = DeepPurple50,
+    onSurface = DeepPurple900Light,
+    surface = DeepPurple50
 
 
     /* Other default colors to override
