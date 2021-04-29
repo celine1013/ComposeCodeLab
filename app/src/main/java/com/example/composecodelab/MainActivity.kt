@@ -4,12 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composecodelab.ui.theme.BlueGray900
@@ -30,7 +33,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppContent(content: @Composable () -> Unit) {
     ComposeCodeLabTheme { //Depends on the porject name
-        Surface(color = BlueGray900) {
+        Surface(color = BlueGray900, modifier = Modifier.fillMaxSize()) {
             content()
         }
     }
@@ -39,12 +42,14 @@ fun AppContent(content: @Composable () -> Unit) {
 @Composable
 fun MainScreenContent(names: List<String> = listOf("Android", "there")) {
     val counterState = remember { mutableStateOf(0) }
-    Column {
-        for(name in names) {
-            Greeting(name = name)
-            Divider(color = Pink50)
+    Column(modifier = Modifier.fillMaxHeight()) {
+        Column(modifier = Modifier.weight(1f)) {
+            for (name in names) {
+                Greeting(name = name)
+                Divider(color = Pink50)
+            }
+            Divider(modifier = Modifier.padding(32.dp))
         }
-        Divider(modifier = Modifier.padding(32.dp))
         Counter(
             count = counterState.value,
             updateCount = { newCount ->
@@ -61,7 +66,12 @@ fun Greeting(name: String) {
 
 @Composable
 fun Counter(count: Int, updateCount: (Int) -> Unit) {
-    Button(onClick = {updateCount(count+1) }) {
+    Button(
+        onClick = { updateCount(count + 1) },
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = if (count > 5) Color.Green else Color.White
+        )
+    ) {
         Text("I've been clicked $count times")
     }
 }
